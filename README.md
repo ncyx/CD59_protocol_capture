@@ -1,4 +1,4 @@
-# CD59_protocol_capture
+# CD59 project protocol capture
 Supplementary material and protocol capture for the thesis
 
 [FlexPepDock protocol capture](https://github.com/ncyx/CD59_protocol_capture/tree/main/FlexPepDock)
