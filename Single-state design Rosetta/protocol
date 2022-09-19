@@ -67,3 +67,7 @@ Extract pdbs from the silent file:
 
 $ROSETTA3/main/source/bin/extract_pdbs.static.linuxgccrelease -in:file:silent_read_through_errors 
 -in:file:silent filename.silent -in:file:tagfile filename.tag
+
+Interface analysis an dG_Separated calculation: 
+
+$ROSETTA3/main/source/bin/InterfaceAnalyzer.static.linuxgccrelease -in:file:l top10_designes.list -out:file:score_only interface_name.sc
