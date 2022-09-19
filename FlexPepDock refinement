@@ -1,4 +1,4 @@
-Protocol capture for high resolution docking (native file provided):
+**Protocol capture for high resolution docking (native file provided):**
 
 #!/bin/bash
 #SBATCH --nodes=1
