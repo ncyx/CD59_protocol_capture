@@ -9,4 +9,6 @@ Supplementary material and protocol capture for the thesis
 
 [Single-state design of peptides with Rosetta](https://github.com/ncyx/CD59_protocol_capture/tree/main/Single-state%20design%20Rosetta)
 
+[Fast relax for ProteinMPNN](https://github.com/ncyx/CD59_protocol_capture/tree/main/Fast%20relax%20ProteinMPNN)
+
 Contributor: Vsevolod Viliuga
