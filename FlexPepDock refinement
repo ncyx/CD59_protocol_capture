@@ -1,0 +1,65 @@
+Protocol capture for high resolution docking (native file provided):
+
+#!/bin/bash
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --mem=40G
+#SBATCH --time=14-00:00:00
+#SBATCH --array=1-25
+#SBATCH --output="%A".txt
+#SBATCH --partition=galaxy-job
+#SBATCH --job-name="DVSLAFSE_AF2_highres_10k"
+
+export OMPI_MCA_btl_openib_if_exclude=mlx4_0
+logfile=log"$task"
+task=$SLURM_ARRAY_TASK_ID
+
+module load Rosetta
+
+/software/all/Rosetta/3.13-gompi-2020b/bin/FlexPepDocking.mpi.linuxgccrelease -in:file:s sample.pdb -pep_refine -ex1 -ex2aro -use_input_sc \\
+-native 34_sample_0398.pdb -nstruct 200 -out:file:silent_struct_type binary -out:file:silent refinement_highres_AF2.silent -out:prefix "$task"_
+
+Extracted PDBs with the following command on my PC:
+
+./bcl.exe protein:Compare -reference_pdb /home/iwe24/Desktop/scripts_mine/rms_calculation/DVSLAFSE_AF2_server/_DVSLAFSE_plased_close_01962.pdb -pdb_list 
+/home/iwe24/Desktop/scripts_mine/rms_calculation/DVSLAFSE_AF2_server/pdb_650_bcl.list 
+-quality RMSD -output_dir /home/iwe24/Desktop/scripts_mine/rms_calculation/DVSLAFSE_AF2_server
+
+Protocol capture for ab initio docking 
+
+#!/bin/bash
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --mem=10G
+#SBATCH --time=14-00:00:00
+#SBATCH --array=1-50
+#SBATCH --output="%A".txt
+#SBATCH --partition=galaxy-job
+#SBATCH --job-name="DVSLAFSE_abinitio_docking_20k"
+
+export OMPI_MCA_btl_openib_if_exclude=mlx4_0
+logfile=log"$task"
+task=$SLURM_ARRAY_TASK_ID
+
+module load Rosetta
+
+/software/all/Rosetta/3.13-gompi-2020b/bin/FlexPepDocking.mpi.linuxgccrelease @flag_flex_pepdocking.txt -s DVSLAFSE_bypymol_CD59_relaxed_0011.pdb 
+-out:file:silent_struct_type binary -out:file:silent DVSLAFSE_abinitio.silent -out:prefix "$task"_
+
+Flag file: 
+
+-lowres_abinitio 
+-pep_refine
+-receptor_chain A
+-flexPepDocking:peptide_chain B
+-flexpep_score_only 
+-ex1 
+-ex2aro
+-use_input_sc
+
+-flexPepDocking:frag3_weight 1.0
+-flexPepDocking:frag5_weight 0.25
+-frag3 ./frag/frags.3mers.offset  
+-flexPepDocking:frag5 ./frag/frags.5mers.offset 
+
+-nstruct 400
