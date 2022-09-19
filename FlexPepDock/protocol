@@ -64,3 +64,9 @@ Constraints file (in case ab initio was performed with .cst file):
 
 AtomPair CD2 79 CE2 41 FLAT_HARMONIC 3.8 1.0 1.0
 AtomPair CG 79 CE3 41 FLAT_HARMONIC 6.6 1.0 1.0
+
+Calculating RMSD to the lowest interface-scoring model: 
+
+./bcl.exe protein:Compare -reference_pdb /home/iwe24/Desktop/scripts_mine/rms_calculation/DVSLAFSE_AF2_server_run4/2000_pdbs/34_sample_0398.pdb 
+-pdb_list /home/iwe24/Desktop/scripts_mine/rms_calculation/DVSLAFSE_AF2_server_run4/2000_pdbs/pdb_2000_bcl.list 
+-quality RMSD -output_dir /home/iwe24/Desktop/scripts_mine/rms_calculation/DVSLAFSE_AF2_server/run4
