@@ -1,4 +1,4 @@
-**Protocol capture for high resolution docking (native file provided)**:
+Protocol capture for high resolution docking (native file provided):
 
 #!/bin/bash
 #SBATCH --nodes=1
@@ -13,7 +13,6 @@
 export OMPI_MCA_btl_openib_if_exclude=mlx4_0
 logfile=log"$task"
 task=$SLURM_ARRAY_TASK_ID
-
 module load Rosetta
 
 /software/all/Rosetta/3.13-gompi-2020b/bin/FlexPepDocking.mpi.linuxgccrelease -in:file:s sample.pdb -pep_refine -ex1 -ex2aro -use_input_sc \\
@@ -21,9 +20,8 @@ module load Rosetta
 
 Extracted PDBs with the following command on my PC:
 
-./bcl.exe protein:Compare -reference_pdb /home/iwe24/Desktop/scripts_mine/rms_calculation/DVSLAFSE_AF2_server/_DVSLAFSE_plased_close_01962.pdb -pdb_list 
-/home/iwe24/Desktop/scripts_mine/rms_calculation/DVSLAFSE_AF2_server/pdb_650_bcl.list 
--quality RMSD -output_dir /home/iwe24/Desktop/scripts_mine/rms_calculation/DVSLAFSE_AF2_server
+$ROSETTA3/main/source/bin/extract_pdbs.static.linuxgccrelease -in:file:silent_read_through_errors 
+-in:file:silent DVSLAFSE_AF2.silent -in:file:tagfile 2000tags.tag
 
 Protocol capture for ab initio docking 
 
@@ -56,10 +54,13 @@ Flag file:
 -ex1 
 -ex2aro
 -use_input_sc
-
 -flexPepDocking:frag3_weight 1.0
 -flexPepDocking:frag5_weight 0.25
 -frag3 ./frag/frags.3mers.offset  
 -flexPepDocking:frag5 ./frag/frags.5mers.offset 
-
 -nstruct 400
+
+Constraints file (in case ab initio was performed with .cst file):
+
+AtomPair CD2 79 CE2 41 FLAT_HARMONIC 3.8 1.0 1.0
+AtomPair CG 79 CE3 41 FLAT_HARMONIC 6.6 1.0 1.0
