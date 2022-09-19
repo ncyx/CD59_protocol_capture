@@ -1,0 +1,40 @@
+Relax flags: 
+
+-nstruct 50
+-relax:ramp_constraints false
+-relax:respect_resfile
+-ex1
+-ex2aro
+-use_input_sc
+-flip_HNQ
+-no_optH false
+
+Selected resfile (sequence GTPLPDEA):
+
+NATRO
+EX 1 EX 2
+start
+21 A NATAA
+23 A NATAA
+24 A NATAA
+39 A NATAA
+40 A NATAA
+41 A NATAA
+42 A NATAA
+45 A NATAA
+53 A NATAA
+54 A NATAA
+55 A NATAA
+56 A NATAA
+76 B PIKAA G
+77 B PIKAA T
+78 B PIKAA P
+79 B PIKAA L
+80 B PIKAA P
+81 B PIKAA D
+82 B PIKAA E
+83 B PIKAA A
+
+Commmand in terminal: 
+
+$ROSETTA3/main/source/bin/relax.static.linuxgccrelease @flags_fast_relax.txt in:file:fullatom -relax:fast
