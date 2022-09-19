@@ -41,7 +41,7 @@ linmem_ig 100						# limit memory to store rotamer pair interactions
 -ex1
 -nstruct 5						# Generate 10 models
 
-Command on cluster:
+Command on cluster (see for backrub.xml in the parent folder)
 
 #!/bin/bash
 #SBATCH --mail-user=Vsevolod.Viliuga@medizin.uni-leipzig.de
@@ -63,4 +63,7 @@ module load Rosetta
 /software/all/Rosetta/3.13-gompi-2020b/bin/rosetta_scripts.mpi.linuxgccrelease -linmem_ig 100 -use_input_sc -ex1 -nstruct 1000 -in:file:s 34_sample_0398_0005_clean.pdb 
 -parser:protocol design_backrub.xml -out:prefix "$task"_ -out:file:silent_struct_type binary -out:file:silent DVSLAFSE_design.silent 
 
+Extract pdbs from the silent file: 
 
+$ROSETTA3/main/source/bin/extract_pdbs.static.linuxgccrelease -in:file:silent_read_through_errors 
+-in:file:silent filename.silent -in:file:tagfile filename.tag
