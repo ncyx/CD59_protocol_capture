@@ -1,0 +1,66 @@
+Relax options and command for the input structure (best interface-scoring CD59-p8 complex after high resolution FlexPepDock)
+
+-linmem_ig 100
+-use_input_sc
+-nstruct 10
+-relax:fast
+-relax:constrain_relax_to_start_coords
+-scorefile relax.fasc	
+$ROSETTA3/main/source/bin/relax.static.linuxgccrelease @relax_flags.txt -s 34_sample_0398.pdb
+
+Resfile: 
+
+NATRO
+EX 1 EX 2
+start
+21 A NATAA
+23 A NATAA
+24 A NATAA
+39 A NATAA
+40 A NATAA
+41 A NATAA
+42 A NATAA
+45 A NATAA
+53 A NATAA
+54 A NATAA
+55 A NATAA
+56 A NATAA
+76 B ALLAA
+77 B ALLAA
+78 B ALLAA
+79 B PIKAA L #leucine of p8 was kept unchanged since it interacted strongly with W40
+80 B ALLAA
+81 B ALLAA
+82 B ALLAA
+83 B ALLAA
+
+Design options:
+
+linmem_ig 100						# limit memory to store rotamer pair interactions
+-use_input_sc						# Include rotamers from the input structure
+-ex1
+-nstruct 5						# Generate 10 models
+
+Command on cluster:
+
+#!/bin/bash
+#SBATCH --mail-user=Vsevolod.Viliuga@medizin.uni-leipzig.de
+#SBATCH --mail-type=FAIL,START,END
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --mem=40G
+#SBATCH --time=14-00:00:00
+#SBATCH --array=1-10
+#SBATCH --output="%A".txt
+#SBATCH --partition=galaxy-job
+#SBATCH --job-name="design_DVSLAFSE"
+export OMPI_MCA_btl_openib_if_exclude=mlx4_0
+logfile=log"$task"
+task=$SLURM_ARRAY_TASK_ID
+
+module load Rosetta
+
+/software/all/Rosetta/3.13-gompi-2020b/bin/rosetta_scripts.mpi.linuxgccrelease -linmem_ig 100 -use_input_sc -ex1 -nstruct 1000 -in:file:s 34_sample_0398_0005_clean.pdb 
+-parser:protocol design_backrub.xml -out:prefix "$task"_ -out:file:silent_struct_type binary -out:file:silent DVSLAFSE_design.silent 
+
+
